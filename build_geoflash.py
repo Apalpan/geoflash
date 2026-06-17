@@ -691,9 +691,9 @@ add("Áreas", "Rombo de diagonales 6 y 8. Halla el área.",
 # SOLUCIONARIO GRÁFICO (Semana 4 CEPRE PUCP)
 # =====================================================================
 SOL = []
-def addsol(pid, topic, q, ans, res, clave, steps, fig):
-    SOL.append({"pid": pid, "topic": topic, "q": q, "ans": ans, "res": res,
-                "clave": clave, "steps": steps, "fig": wrap(fig)})
+def addsol(pid, topic, q, ans, res, clave, steps, fig=None, group="Semana 4 · Geometría"):
+    SOL.append({"pid": pid, "group": group, "topic": topic, "q": q, "ans": ans, "res": res,
+                "clave": clave, "steps": steps, "fig": wrap(fig) if fig else ""})
 
 # --- P81: diagonales del endecágono ---
 O = (160, 116); R = 92
@@ -775,6 +775,307 @@ addsol("P 90", "Circunferencia + cuadrado",
      {"t": "Diagonal de un cuadrado en función del lado.", "m": "d = L·√2"},
      {"t": "Iguala y despeja L.", "m": "L√2 = 8√2 → L = 8"},
      {"t": "Área del cuadrado.", "m": "A = L² = 8²"}], fig90)
+
+# ===== SEMANA 5 · GEOMETRÍA (71-86) =====
+GEO5 = "Semana 5 · Geometría"
+fig78 = (circ(160, 84, 82) + line(112, 150, 208, 150)
+    + line(160, 84, 160, 150, "fl dash") + line(160, 84, 112, 150, "fhi")
+    + rightangle(160, 150, 180, 90, 9)
+    + txt(150, 122, "5", "fg", "end") + txt(135, 166, "12", "fg")
+    + txt(126, 110, "r", "fu", "end") + dot(160, 84) + dot(160, 150) + txt(160, 165, "M", "fsm"))
+A_ = pol(100, 150, 100, 75); B_ = pol(100, 150, 100, -75)
+fig79 = (line(100, 150, *A_) + line(100, 150, *B_) + arc2(100, 150, 100, -75, 75, "fhi")
+    + arc2(100, 150, 28, -75, 75, "fau") + alabel(100, 150, 48, -75, 75, "150°", "fu")
+    + txt(mid((100, 150), A_)[0]-8, mid((100, 150), A_)[1]-5, "12", "fg")
+    + dot(100, 150) + txt(94, 163, "O", "fsm") + txt(A_[0]+7, A_[1], "A", "fsm") + txt(B_[0]+7, B_[1]+3, "B", "fsm"))
+
+addsol("P 71", "Círculo", "Si el área de un círculo es 81π cm², calcula su diámetro.",
+    "D) 18 cm", "D = 18 cm",
+    "Área = πr². Cuando el área viene como “kπ”, entonces r² = k; el diámetro es 2r.",
+    [{"t": "Área del círculo.", "m": "πr² = 81π → r² = 81"},
+     {"t": "Raíz y duplica.", "m": "r = 9 → D = 2r = 18"}], group=GEO5)
+addsol("P 72", "Cuadrilátero inscrito", "ABCD inscrito en una circunferencia. Si ∠B = 32°, calcula ∠ADC.",
+    "A) 148°", "∠ADC = 148°",
+    "Cuadrilátero inscrito (cíclico): los ángulos opuestos suman 180°.",
+    [{"t": "Opuestos suplementarios.", "m": "∠B + ∠ADC = 180°"},
+     {"t": "Despeja.", "m": "∠ADC = 180° − 32° = 148°"}], group=GEO5)
+addsol("P 73", "Áreas — segmento", "Cuadrante de radio 2 m (OA = OB = 2). Halla el área de la región sombreada.",
+    "B) (π − 2) m²", "(π − 2) m²",
+    "Segmento circular = sector − triángulo. Recuerda: cuadrante = πr²/4.",
+    [{"t": "Sector de 90° (cuadrante), r = 2.", "m": "πr²/4 = π·4/4 = π"},
+     {"t": "Triángulo OAB.", "m": "(2·2)/2 = 2"},
+     {"t": "Resta.", "m": "π − 2"}], group=GEO5)
+addsol("P 74", "Tangentes", "Desde un punto exterior, tangentes (2x+6) y (4x−8) (P y Q de tangencia). Halla x.",
+    "C) 7", "x = 7",
+    "Las dos tangentes desde un mismo punto exterior son IGUALES. Iguálalas y despeja.",
+    [{"t": "Tangentes congruentes.", "m": "4x − 8 = 2x + 6"},
+     {"t": "Despeja.", "m": "2x = 14 → x = 7"}], group=GEO5)
+addsol("P 75", "Cuerdas", "Cuerdas AB y CD se cortan en P. arco AC = 80°, arco DB = 110°. Mayor ángulo que forman.",
+    "B) 95°", "95°",
+    "Ángulo interior (cuerdas que se cortan) = semisuma de los arcos opuestos; el otro ángulo es su suplemento.",
+    [{"t": "Semisuma de arcos opuestos.", "m": "(80 + 110)/2 = 95°"},
+     {"t": "Ese es el mayor (el otro = 85°).", "m": "máx = 95°"}], group=GEO5)
+addsol("P 76", "Tangentes + inscrito", "PA y PB tangentes, ∠APB = 72°. Calcula ∠AQB (inscrito).",
+    "B) 54°", "∠AQB = 54°",
+    "Entre dos tangentes: ∠P = 180° − arco menor. El inscrito = arco/2.",
+    [{"t": "Ángulo entre tangentes.", "m": "72° = 180° − arco AB → arco AB = 108°"},
+     {"t": "Inscrito sobre ese arco.", "m": "108°/2 = 54°"}], group=GEO5)
+addsol("P 77", "Pitot", "Trapecio circunscrito: lados 6 (arriba), 13 (abajo), (a+4) y (b+2). Halla a + b.",
+    "C) 13 cm", "a + b = 13",
+    "Pitot: en un cuadrilátero circunscrito, la suma de lados opuestos es la misma.",
+    [{"t": "Lados opuestos suman igual.", "m": "6 + 13 = (a+4) + (b+2)"},
+     {"t": "Despeja.", "m": "19 = a + b + 6 → a + b = 13"}], group=GEO5)
+addsol("P 78", "Radio y cuerda", "Cuerda de 24 cm; la distancia del centro a la cuerda es 5 cm. Halla el radio.",
+    "B) 13 cm", "r = 13 cm",
+    "La perpendicular del centro biseca la cuerda → triángulo rectángulo (radio, semicuerda, distancia). Pitágoras.",
+    [{"t": "La distancia biseca la cuerda.", "m": "semicuerda = 24/2 = 12"},
+     {"t": "Pitágoras (terna 5-12-13).", "m": "r = √(5² + 12²) = 13"}], fig=fig78, group=GEO5)
+addsol("P 79", "Sector circular", "Sector AOB de radio 12 cm y ángulo 150°. Halla su área.",
+    "B) 60π cm²", "A = 60π cm²",
+    "Área del sector = (θ/360°)·πr². Es la fracción θ/360 del círculo completo.",
+    [{"t": "Fórmula del sector.", "m": "(150/360)·π·12²"},
+     {"t": "Opera.", "m": "(5/12)·144π = 60π"}], fig=fig79, group=GEO5)
+addsol("P 80", "Inradio — tangentes", "AB = 6, BC = 8, AC = 12; el incírculo toca AB en G. Halla BG.",
+    "A) 1 cm", "BG = 1 cm",
+    "Longitud de tangente desde un vértice = semiperímetro − lado opuesto.",
+    [{"t": "Semiperímetro.", "m": "s = (6+8+12)/2 = 13"},
+     {"t": "Tangente desde B.", "m": "BG = s − AC = 13 − 12 = 1"}], group=GEO5)
+addsol("P 81", "Áreas — recomposición", "Rectángulo ABCD con cuartos de círculo (radio 5). Halla el área sombreada.",
+    "C) 25 cm²", "25 cm²",
+    "Cuando hay arcos que “entran y salen”, recórtalos y recompón: lo curvo se cancela y queda una figura simple (un triángulo).",
+    [{"t": "Las zonas curvas se compensan.", "m": "sombra = triángulo equivalente"},
+     {"t": "Base 10, altura 5.", "m": "(10·5)/2 = 25"}], group=GEO5)
+addsol("P 82", "Áreas — puntos medios", "M, N, P, Q son puntos medios del cuadrado de lado 2a. Halla el área sombreada.",
+    "D) 2a²", "2a²",
+    "Une los puntos medios: lo que sobra y falta de las curvas se compensa y queda la mitad del cuadrado.",
+    [{"t": "Área del cuadrado.", "m": "(2a)² = 4a²"},
+     {"t": "La sombra recompone la mitad.", "m": "4a²/2 = 2a²"}], group=GEO5)
+addsol("P 83", "Longitud de arco", "Cuadrado de lado 12, ∠BAP = 30°. Halla la longitud del arco PQ.",
+    "B) π cm", "L = π cm",
+    "Longitud de arco = r·θ (θ en radianes). Identifica el ángulo central del arco.",
+    [{"t": "El arco subtiende 15° en A (60° − 45° de la diagonal).", "m": "θ = 15° = π/12 rad"},
+     {"t": "Arco = r·θ.", "m": "12·(π/12) = π"}], group=GEO5)
+addsol("P 84", "Tangentes", "O centro; P, Q tangencia; ángulo exterior 70°. Calcula ∠OPQ.",
+    "B) 35°", "∠OPQ = 35°",
+    "En el cuadrilátero OPMQ los ángulos en P y Q valen 90° (radio ⊥ tangente), así que ∠M + ∠O = 180°.",
+    [{"t": "Ángulo central.", "m": "∠POQ = 180° − 70° = 110°"},
+     {"t": "OPQ isósceles (OP = OQ = r).", "m": "∠OPQ = (180° − 110°)/2 = 35°"}], group=GEO5)
+addsol("P 85", "Equilátero inscrito", "ABC equilátero inscrito, ∠AEC = 100°. Calcula ∠CBD.",
+    "B) 20°", "∠CBD = 20°",
+    "Equilátero inscrito → cada arco mide 120°. Ángulo interior = semisuma de arcos; inscrito = arco/2.",
+    [{"t": "Interior (cuerdas), arco AC = 120°.", "m": "100 = (120 + arco BD)/2 → arco BD = 80°"},
+     {"t": "arco DC = 120 − 80 = 40°; ∠CBD inscrito.", "m": "40/2 = 20°"}], group=GEO5)
+addsol("P 86", "Tangente común", "Circunferencias de radios 6 y 2 (tangentes exteriores); M, N tangencia. Calcula MN.",
+    "C) 4√3 m", "MN = 4√3 m",
+    "Tangente común externa = √(d² − (R − r)²). Si son tangentes exteriores, d = R + r.",
+    [{"t": "Distancia entre centros.", "m": "d = 6 + 2 = 8"},
+     {"t": "Tangente externa.", "m": "MN = √(8² − 4²) = √48 = 4√3"}], group=GEO5)
+
+# ===== SEMANA 5 · GEOMETRÍA (87-100) =====
+O = (95, 150); ri = 58; ro = 92; a1 = 8; a2 = 68
+Pi1 = pol(*O, ri, a1); Pi2 = pol(*O, ri, a2); Po1 = pol(*O, ro, a1); Po2 = pol(*O, ro, a2)
+fig88 = (line(*Pi1, *Po1) + line(*Pi2, *Po2) + arc2(*O, ro, a1, a2, "fhi") + arc2(*O, ri, a1, a2, "fhi")
+    + arc2(*O, 30, a1, a2, "fau") + alabel(*O, 46, a1, a2, "60°", "fu")
+    + txt(Po2[0]+5, Po2[1]-4, "10", "fg") + txt(Pi2[0]-3, Pi2[1]-7, "8", "fg")
+    + dot(*O) + txt(O[0]-6, O[1]+12, "O", "fsm"))
+O = (160, 158); rad = 94
+A_ = pol(*O, rad, 180); Bp = pol(*O, rad, 90); C_ = pol(*O, rad, 0)
+seg = [pol(*O, rad, 180 - 90*i/10) for i in range(11)]
+fig90s5 = (arc2(*O, rad, 0, 180, "fl") + line(*A_, *C_, "fl")
+    + polyline(seg, cls="ff", closed=True) + line(*A_, *Bp, "fhi") + line(*O, *Bp, "fl")
+    + txt(mid(O, Bp)[0]+9, mid(O, Bp)[1], "R", "fg")
+    + dot(*O) + txt(O[0], O[1]+15, "O", "fsm") + txt(A_[0]-8, A_[1]+3, "A", "fsm")
+    + txt(Bp[0], Bp[1]-8, "B", "fsm") + txt(C_[0]+8, C_[1]+3, "C", "fsm"))
+O = (160, 116); rad = 92
+A_ = pol(*O, rad, 180); B_ = pol(*O, rad, 0); C_ = pol(*O, rad, 55)
+fig100s5 = (circ(*O, rad) + line(*A_, *B_, "fl") + line(*A_, *C_, "fhi") + line(*C_, *B_, "fl")
+    + line(C_[0], C_[1], C_[0], O[1], "fl dash") + rightangle(C_[0], O[1], 90, 180, 8)
+    + txt(mid(A_, C_)[0]-8, mid(A_, C_)[1]-4, "6", "fg") + txt(160, O[1]+18, "8", "fg")
+    + txt((A_[0]+C_[0])/2, O[1]-7, "x", "fu")
+    + dot(*A_) + dot(*B_) + dot(*C_) + txt(A_[0]-8, A_[1]+3, "A", "fsm")
+    + txt(B_[0]+8, B_[1]+3, "B", "fsm") + txt(C_[0]+4, C_[1]-6, "C", "fsm") + txt(C_[0]+2, O[1]+15, "H", "fsm"))
+
+addsol("P 87", "Paralelogramo + tangentes", "ABCD paralelogramo; B y D son puntos de tangencia. Halla x.",
+    "C) 80°", "x = 80°",
+    "Desde A las tangentes AB y AD son iguales (△ isósceles); x se obtiene con la relación tangente–arco de la figura.",
+    [{"t": "Tangentes desde A iguales.", "m": "AB = AD → △ABD isósceles"},
+     {"t": "Por la relación tangente–arco.", "m": "x = 80°"}], group=GEO5)
+addsol("P 88", "Trapecio circular", "Trapecio circular (corona-sector) de radios 8 y 10, ángulo 60°. Halla su área.",
+    "B) 6π m²", "A = 6π m²",
+    "Trapecio circular = (θ/360)·π·(R² − r²). Es un sector “con hueco”.",
+    [{"t": "Fórmula.", "m": "(60/360)·π·(10² − 8²)"},
+     {"t": "Opera.", "m": "(1/6)·π·36 = 6π"}], fig=fig88, group=GEO5)
+addsol("P 89", "Tangentes — arcos", "Ángulo exterior 2α y ángulo tangente-cuerda 8α (P, Q tangencia). Halla α.",
+    "A) 10", "α = 10",
+    "Semiinscrito (tangente-cuerda) = arco/2; ángulo entre tangentes = 180° − arco menor.",
+    [{"t": "8α es semiinscrito → arco = 16α.", "m": "arco PQ = 16α"},
+     {"t": "Ángulo entre tangentes.", "m": "2α = 180 − 16α → 18α = 180 → α = 10"}], group=GEO5)
+addsol("P 90", "Segmento circular", "AB = BC, radio R = 8. Halla el área del segmento sombreado.",
+    "B) 16(π − 2) cm²", "16(π − 2) cm²",
+    "AB = BC ⇒ el arco mide 90°. Segmento = sector(90°) − triángulo.",
+    [{"t": "Sector de 90°.", "m": "πR²/4 = π·64/4 = 16π"},
+     {"t": "Triángulo (catetos R y R).", "m": "R²/2 = 32"},
+     {"t": "Resta.", "m": "16π − 32 = 16(π − 2)"}], fig=fig90s5, group=GEO5)
+addsol("P 91", "Tangente — cuerda", "E es punto de tangencia, AE = EC, ángulo de 20°. Halla x.",
+    "B) 10", "x = 10",
+    "Tangente-cuerda = arco/2; AE = EC hace isósceles el triángulo. El arco de x es la mitad del de 20°.",
+    [{"t": "AE = EC → ángulos base iguales.", "m": "el arco de x = mitad del arco de 20°"},
+     {"t": "Resultado.", "m": "x = 10°"}], group=GEO5)
+addsol("P 92", "Secantes exteriores", "Secantes PAB y PCD. arco AC = CD/4 = AB/3 = BD/2. Halla ∠APC.",
+    "C) 18°", "∠APC = 18°",
+    "Llama k al arco menor: pon todos los arcos en función de k, suma 360° y usa ∠ext = (lejano − cercano)/2.",
+    [{"t": "Arcos: AC = k, AB = 3k, BD = 2k, CD = 4k.", "m": "10k = 360 → k = 36"},
+     {"t": "Ángulo exterior.", "m": "(2k − k)/2 = 18°"}], group=GEO5)
+addsol("P 93", "Cuadrado + arco", "Cuadrado de lado 4; D es centro del arco AC. Halla el área sombreada.",
+    "B) 2(π − 2) m²", "2(π − 2) m²",
+    "Segmento = sector − triángulo; la diagonal lo divide en dos partes iguales.",
+    [{"t": "Cuadrante (r=4) menos triángulo ACD.", "m": "4π − 8 = segmento AC"},
+     {"t": "La diagonal toma la mitad.", "m": "(4π − 8)/2 = 2(π − 2)"}], group=GEO5)
+addsol("P 94", "Áreas — sector y semicírculo", "El área sombreada mide 8π m². Halla el radio OA.",
+    "D) 8 m", "OA = 8 m",
+    "Descompón en sector(90°) − semicírculo (de diámetro = radio) y despeja R.",
+    [{"t": "Sombra = πR²/4 − π(R/2)²/2.", "m": "= πR²/8"},
+     {"t": "Iguala a 8π.", "m": "πR²/8 = 8π → R² = 64 → R = 8"}], group=GEO5)
+addsol("P 95", "Tangentes + paralelas", "PA, PB tangentes; AC ∥ PB; EB ∥ AP; ∠APB = 80°. Halla el arco EC.",
+    "A) 40°", "arco EC = 40°",
+    "Tangente-tangente: ∠P = 180° − arco AB. Las cuerdas paralelas trasladan arcos iguales.",
+    [{"t": "Arco AB.", "m": "80 = 180 − arco AB → arco AB = 100°"},
+     {"t": "Por los paralelos.", "m": "arco EC = 40°"}], group=GEO5)
+addsol("P 96", "Perímetro sombreado", "Triángulo rectángulo, r = 3, cateto 8. Perímetro de la región sombreada.",
+    "B) (18 + 3π) cm", "(18 + 3π) cm",
+    "Perímetro = tramos rectos + longitud de arcos (arco = r·θ). Suma cada parte del contorno.",
+    [{"t": "Arcos (r = 3).", "m": "suman 3π"},
+     {"t": "Tramos rectos.", "m": "suman 18 → P = 18 + 3π"}], group=GEO5)
+addsol("P 97", "Áreas — cuartos", "Cuadrado de lado 4; los vértices son centros de cuartos de círculo iguales. Área sombreada.",
+    "B) 8(π − 2) cm²", "8(π − 2) cm²",
+    "Suma de sectores − área del cuadrado = los “pétalos” (zonas de doble cobertura).",
+    [{"t": "Cuatro cuartos = “doble cobertura”.", "m": "2·(área) − cuadrado"},
+     {"t": "Pétalos.", "m": "= 8(π − 2)"}], group=GEO5)
+addsol("P 98", "Relaciones métricas", "Semicircunferencia, 3·AH = 5·HB, AP = 20. Halla el radio (O centro).",
+    "D) 4√10 m", "R = 4√10 m",
+    "En la semicircunferencia ∠P = 90°; relación métrica: cateto² = (su proyección)·hipotenusa.",
+    [{"t": "AH = 5k, HB = 3k → AB = 8k.", "m": "AP² = AH·AB"},
+     {"t": "Sustituye.", "m": "400 = 5k·8k = 40k² → k = √10 → R = 4√10"}], group=GEO5)
+addsol("P 99", "Cuerdas paralelas", "AB ∥ CD, ABE equilátero, ángulo de 14°. Calcula ∠ABD.",
+    "A) 74°", "∠ABD = 74°",
+    "Cuerdas paralelas → arcos iguales; equilátero → 60°; inscritos sobre el mismo arco son iguales.",
+    [{"t": "∠ABE del equilátero.", "m": "= 60°"},
+     {"t": "Más el inscrito de 14°.", "m": "∠ABD = 60 + 14 = 74°"}], group=GEO5)
+addsol("P 100", "Proyección", "Círculo de radio 4 (diámetro 8); cuerda de 6 desde un extremo. Proyección sobre el diámetro.",
+    "D) 4,5 m", "AH = 4,5 m",
+    "El ángulo inscrito en un diámetro es 90°. Proyección de un cateto = cateto²/hipotenusa.",
+    [{"t": "Triángulo rectángulo (∠ en la cuerda = 90°).", "m": "AC = 6, AB = 8"},
+     {"t": "Proyección.", "m": "AH = AC²/AB = 36/8 = 4,5"}], fig=fig100s5, group=GEO5)
+
+# ===== SEMANA 5 · TRIGONOMETRÍA (101-120) =====
+TRI5 = "Semana 5 · Trigonometría"
+Bt = (95, 60); Ct = (95, 170); At = (255, 170)
+fig103s5 = (polyline([Bt, Ct, At], closed=True) + rightangle(*Ct, 0, 90, 12)
+    + arc2(*At, 26, 146, 180, "fau") + alabel(*At, 42, 146, 180, "x", "fu")
+    + txt(80, 118, "8", "fg", "end") + txt(182, 108, "17", "fg"))
+
+addsol("P 101", "Conversión a g·m·s", "Convierte a grados, minutos y segundos: 3π/8, 5π/48, 15π/64 y 125π/288 rad.",
+    "", "67°30' · 18°45' · 42°11'15\" · 78°7'30\"",
+    "π rad = 180°: multiplica por 180/π. La parte decimal del grado ×60 da minutos; su decimal ×60 da segundos.",
+    [{"t": "a) (3/8)·180.", "m": "67,5° = 67°30'"},
+     {"t": "b) (5/48)·180.", "m": "18,75° = 18°45'"},
+     {"t": "c) (15/64)·180.", "m": "42,1875° = 42°11'15\""},
+     {"t": "d) (125/288)·180.", "m": "78,125° = 78°7'30\""}], group=TRI5)
+addsol("P 102", "Comparar ángulos", "Ordena de menor a mayor: α = 2π/5 rad, β = 18°, θ = π/12 rad.",
+    "D) θ; β; α", "θ < β < α",
+    "Pasa TODO a la misma unidad (grados) antes de comparar.",
+    [{"t": "Convierte a grados.", "m": "α = 72°, β = 18°, θ = 15°"},
+     {"t": "Ordena.", "m": "15 < 18 < 72 → θ; β; α"}], group=TRI5)
+addsol("P 103", "Razón trigonométrica", "Triángulo rectángulo: hipotenusa 17, cateto 8. Calcula tan x.",
+    "B) 8/15", "tan x = 8/15",
+    "tan = cateto opuesto / cateto adyacente. Completa el triángulo con Pitágoras (8-15-17).",
+    [{"t": "Tercer lado.", "m": "√(17² − 8²) = 15"},
+     {"t": "Tangente.", "m": "opuesto/adyacente = 8/15"}], fig=fig103s5, group=TRI5)
+addsol("P 104", "Identidades", "B = 90°. Calcula E = (tanA + cotA)/(2·secC·cscC).",
+    "B) 1/2", "E = 1/2",
+    "tanθ + cotθ = 1/(senθ·cosθ) y secθ·cscθ = 1/(senθ·cosθ). Usa que A y C son complementarios.",
+    [{"t": "Numerador y denominador.", "m": "1/(senA·cosA) ÷ 2/(senC·cosC)"},
+     {"t": "A + C = 90 ⇒ senA·cosA = senC·cosC.", "m": "E = 1/2"}], group=TRI5)
+addsol("P 105", "Identidades", "C = 90°. Simplifica E = ab·senA·(cotA + cotB).",
+    "C) ac", "E = ac",
+    "cotA + cotB = sen(A+B)/(senA·senB); en triángulo recto A + B = 90° ⇒ sen(A+B) = 1.",
+    [{"t": "Suma de cotangentes.", "m": "cotA + cotB = 1/(senA·senB)"},
+     {"t": "Sustituye y usa senB = b/c.", "m": "ab/senB = ac"}], group=TRI5)
+addsol("P 106", "Razón trigonométrica", "B = 90°, AB/BC = 5/12. Calcula sen C.",
+    "B) 5/13", "sen C = 5/13",
+    "Triángulo 5-12-13. sen C = cateto opuesto a C / hipotenusa.",
+    [{"t": "Hipotenusa.", "m": "√(5² + 12²) = 13"},
+     {"t": "sen C.", "m": "opuesto/hip = 5/13"}], group=TRI5)
+addsol("P 107", "Notables 45°", "Rectángulo isósceles recto en C (A = B = 45°). Calcula Q = (cosB − tanB)(cotB + senB).",
+    "B) −1/2", "Q = −1/2",
+    "Recto isósceles en C ⇒ A = B = 45°. Usa los valores notables de 45°.",
+    [{"t": "Valores de 45°.", "m": "cos45 = sen45 = √2/2; tan45 = cot45 = 1"},
+     {"t": "Opera.", "m": "(√2/2 − 1)(1 + √2/2) = −1/2"}], group=TRI5)
+addsol("P 108", "Tangentes en figura", "Bases 1u, 2u, 3u y altura a. Calcula E = (tanx + tany − tanz)/(tanx − tany + tanz).",
+    "D) 1/9", "E = 1/9",
+    "tan = altura / base acumulada. Escribe cada tangente; la altura a se cancela.",
+    [{"t": "Tangentes.", "m": "tanx = a/6, tany = a/5, tanz = a/3"},
+     {"t": "Sustituye (común 30).", "m": "(1/30)/(9/30) = 1/9"}], group=TRI5)
+addsol("P 109", "Triángulo en PA", "Lados de un triángulo rectángulo en progresión aritmética. cos del mayor ángulo agudo.",
+    "C) 3/5", "cos = 3/5",
+    "Lados en PA + rectángulo ⇒ SIEMPRE es el 3-4-5. El mayor ángulo agudo se opone al cateto 4.",
+    [{"t": "Lados 3k, 4k, 5k.", "m": "3² + 4² = 5² ✓"},
+     {"t": "cos del ángulo opuesto a 4k.", "m": "adyacente/hip = 3/5"}], group=TRI5)
+addsol("P 110", "Perímetro con razón", "B = 90°, tanA = 5/12, c − a = 14. Calcula el perímetro.",
+    "B) 60 cm", "P = 60 cm",
+    "tanA = 5/12 → triángulo 5-12-13 (lados 5k, 12k, 13k). La diferencia de lados da k.",
+    [{"t": "c − a = 12k − 5k.", "m": "7k = 14 → k = 2"},
+     {"t": "Perímetro.", "m": "(5 + 12 + 13)·2 = 60"}], group=TRI5)
+addsol("P 111", "Razón trigonométrica", "tan α = 1/4, AD = 4. Halla DC.",
+    "B) 1 cm", "DC = 1 cm",
+    "tan α = opuesto/adyacente ⇒ opuesto = adyacente · tan α.",
+    [{"t": "DC opuesto, AD adyacente.", "m": "DC = AD·tanα = 4·(1/4)"},
+     {"t": "Resultado.", "m": "DC = 1"}], group=TRI5)
+addsol("P 112", "Radicales", "sen α = 4/7, cos β = 1/9 (agudos). Calcula M = √165·sec α·sen β.",
+    "C) 140/9", "M = 140/9",
+    "Con sen α arma el triángulo (4, √33, 7) para sec α; con cos β halla sen β. Simplifica radicales (√825 = 5√33).",
+    [{"t": "sec α y sen β.", "m": "secα = 7/√33; senβ = 4√5/9"},
+     {"t": "Multiplica.", "m": "√165·(7/√33)·(4√5/9) = 140/9"}], group=TRI5)
+addsol("P 113", "Identidades", "Recto en A, BC = a, senB·senC·tanB = 16/a². Halla AC.",
+    "B) 4 u", "AC = 4 u",
+    "Pasa todo a lados (sen = op/hip, tan = op/ady). Se cancelan y queda AC²/a².",
+    [{"t": "Producto en lados.", "m": "(b/a)(c/a)(b/c) = b²/a²"},
+     {"t": "Iguala.", "m": "b²/a² = 16/a² → AC = 4"}], group=TRI5)
+addsol("P 114", "Isósceles", "ABC isósceles (AB = AC), cos A = 0,8. Halla tan B.",
+    "A) 3", "tan B = 3",
+    "En el isósceles B = 90° − A/2 ⇒ tanB = cot(A/2). Usa cosA = 1 − 2sen²(A/2).",
+    [{"t": "Ángulo mitad.", "m": "0,8 = 1 − 2sen²(A/2) → sen(A/2) = 1/√10"},
+     {"t": "tanB = cot(A/2).", "m": "= 3/1 = 3"}], group=TRI5)
+addsol("P 115", "Notables", "Calcula M = (√3·cos²30·tan60 − √6·sen45·cot30)/(2·sec45·cos45).",
+    "A) −3/8", "M = −3/8",
+    "Reemplaza valores notables (30, 45, 60) y opera los radicales con cuidado.",
+    [{"t": "Numerador.", "m": "9/4 − 3 = −3/4"},
+     {"t": "Denominador y división.", "m": "den = 2 → (−3/4)/2 = −3/8"}], group=TRI5)
+addsol("P 116", "Complementarios", "cos(61° − 2x)·tan(2x) = sen(2x + 29°). Halla x.",
+    "C) 22,5", "x = 22,5°",
+    "cos(θ) = sen(90° − θ): aquí cos(61° − 2x) = sen(2x + 29°). Se cancelan y queda tan2x = 1.",
+    [{"t": "Convierte cos a sen.", "m": "cos(61−2x) = sen(2x+29)"},
+     {"t": "Cancela.", "m": "tan(2x) = 1 → 2x = 45 → x = 22,5"}], group=TRI5)
+addsol("P 117", "Complementarios", "sen3α = cos75°, tan2β = cot80°, sec(α+β) = cscθ. Halla θ (rad).",
+    "D) 4π/9 rad", "θ = 4π/9 rad",
+    "Razón = co-razón del complemento: sen = cos(90−), tan = cot(90−), sec = csc(90−).",
+    [{"t": "α y β.", "m": "3α = 15 → α = 5; 2β = 10 → β = 5"},
+     {"t": "sec(10) = csc(80) = cscθ.", "m": "θ = 80° = 4π/9 rad"}], group=TRI5)
+addsol("P 118", "Complementarios", "sec(2x) = csc(4x), x mínimo positivo. Halla cos(3x)·cos(4x).",
+    "D) √2/4", "√2/4",
+    "sec = csc(complemento): sec(2x) = csc(90° − 2x). Iguala los ángulos.",
+    [{"t": "Halla x.", "m": "90 − 2x = 4x → x = 15°"},
+     {"t": "Evalúa.", "m": "cos45·cos60 = (√2/2)(1/2) = √2/4"}], group=TRI5)
+addsol("P 119", "Complementarios", "Simplifica [3(4sen40° + 2cos50°)] / sen40°.",
+    "D) 18", "18",
+    "cos50° = sen40° (complementarios): sustituye para factorizar y cancelar.",
+    [{"t": "cos50 = sen40.", "m": "4sen40 + 2sen40 = 6sen40"},
+     {"t": "Multiplica y cancela.", "m": "3·6sen40 / sen40 = 18"}], group=TRI5)
+addsol("P 120", "Ecuación trig.", "Con sen(2x+25)cos56/[cos(x+5)sen34] = √((√3)² − 2), halla E = [cos(2x+10) − sen(2x) + 2]·(√3/2).",
+    "A) √3", "E = √3",
+    "El radical vale 1; cos56° = sen34° se cancela ⇒ sen(2x+25) = cos(x+5). Resuelve y evalúa.",
+    [{"t": "Despeja x.", "m": "2x + 25 = 85 − x → x = 20°"},
+     {"t": "Evalúa (cos50 − sen40 = 0).", "m": "E = (0 + 2)·√3/2 = √3"}], group=TRI5)
 
 # =====================================================================
 HEAD = r'''<!doctype html>
@@ -977,7 +1278,16 @@ h1,h2,h3{font-family:"Space Grotesk",Inter,sans-serif;font-weight:700;letter-spa
 /* ---------- SOLUCIONARIO ---------- */
 .sol-top{display:flex;align-items:center;gap:14px;margin-bottom:6px}
 .sol-top h2{font-size:clamp(1.3rem,4.4vw,1.75rem)}
-.sol-intro{color:var(--muted);font-size:.9rem;margin-bottom:18px;text-wrap:pretty}
+.sol-intro{color:var(--muted);font-size:.9rem;margin-bottom:16px;text-wrap:pretty}
+.sol-intro b{color:var(--accent)}
+.sol-filter{display:flex;gap:8px;flex-wrap:wrap;margin-bottom:18px;position:sticky;top:0;z-index:6;padding:10px 0;background:linear-gradient(var(--bg) 78%,transparent)}
+.sfchip{font-family:"Space Grotesk";font-size:.78rem;font-weight:600;padding:7px 13px;border-radius:9px;border:1px solid var(--line);background:var(--bg2);color:var(--muted);cursor:pointer;transition:transform .12s var(--ease),border-color .16s,background .16s,color .16s}
+.sfchip:hover{border-color:color-mix(in oklch,var(--accent) 45%,var(--line));color:var(--fg)}
+.sfchip:active{transform:scale(.96)}
+.sfchip.on{background:var(--accent-soft);border-color:var(--accent);color:var(--accent)}
+.sol-group[style*="none"]+.sol-group{margin-top:0}
+.sol-gh{font-family:"Space Grotesk";font-weight:700;font-size:.98rem;color:var(--fg);margin:4px 0 14px;padding-bottom:9px;border-bottom:2px solid var(--accent-soft)}
+.sol-gh span{color:var(--muted);font-weight:600;font-size:.85rem}
 .sol-card{background:var(--panel);border:1px solid var(--line);border-radius:var(--radius);padding:clamp(15px,3vw,20px);margin-bottom:16px;backdrop-filter:blur(14px);-webkit-backdrop-filter:blur(14px);box-shadow:0 14px 40px -32px color-mix(in oklch,var(--fg) 55%,transparent);animation:screenIn .5s var(--ease) both}
 .sol-head{display:flex;align-items:center;gap:10px;margin-bottom:11px;flex-wrap:wrap}
 .sol-pid{font-family:"Space Grotesk";font-weight:700;font-size:.82rem;background:var(--fg);color:var(--bg2);padding:3px 10px;border-radius:7px}
@@ -1135,7 +1445,8 @@ BODY = r'''<body>
       <button class="btn ghost" id="solBack" aria-label="Volver">←</button>
       <h2>Solucionario gráfico</h2>
     </div>
-    <p class="sol-intro">5 problemas de geometría resueltos paso a paso — como en el examen. Fíjate en el patrón y la fórmula clave, no memorices el número.</p>
+    <p class="sol-intro">Geometría y Trigonometría resueltas paso a paso — con el <b>truco clave</b> de cada tipo para que resuelvas los similares. Filtra por bloque.</p>
+    <div class="sol-filter" id="solFilter"></div>
     <div id="solList"></div>
     <p class="foot">GeoFlash · Practiquemos Semana 4 · CEPRE PUCP</p>
   </section>
@@ -1396,20 +1707,33 @@ function setPause(on){
 }
 
 /* ---------- solucionario ---------- */
+function solCard(s){
+  return `<article class="sol-card">
+    <div class="sol-head"><span class="sol-pid">${s.pid}</span><span class="sol-topic">${s.topic}</span>${s.ans?`<span class="sol-ans">✓ ${s.ans}</span>`:''}</div>
+    <p class="sol-q">${s.q}</p>
+    ${s.fig?`<div class="figwrap sol-fig"><div role="img" aria-label="${s.q}">${s.fig}</div></div>`:''}
+    <div class="sol-steps">
+      ${s.steps.map((st,i)=>`<div class="step"><span class="sn">${i+1}</span><div class="sb"><span class="st">${st.t}</span>${st.m?`<span class="sm">${st.m}</span>`:''}</div></div>`).join('')}
+    </div>
+    <div class="sol-res"><span>Resultado</span><b>${s.res}</b></div>
+    <div class="sol-clave"><span class="bulb">🎯</span><p><b>Clave para el examen</b>${s.clave}</p></div>
+  </article>`;
+}
 function renderSol(){
-  const box = $('#solList');
-  if(box.dataset.done) return; box.dataset.done = '1';
-  box.innerHTML = SOL.map(s=>`
-    <article class="sol-card">
-      <div class="sol-head"><span class="sol-pid">${s.pid}</span><span class="sol-topic">${s.topic}</span><span class="sol-ans">✓ ${s.ans}</span></div>
-      <p class="sol-q">${s.q}</p>
-      <div class="figwrap sol-fig"><div role="img" aria-label="${s.q}">${s.fig}</div></div>
-      <div class="sol-steps">
-        ${s.steps.map((st,i)=>`<div class="step"><span class="sn">${i+1}</span><div class="sb"><span class="st">${st.t}</span>${st.m?`<span class="sm">${st.m}</span>`:''}</div></div>`).join('')}
-      </div>
-      <div class="sol-res"><span>Resultado</span><b>${s.res}</b></div>
-      <div class="sol-clave"><span class="bulb">🎯</span><p><b>Clave para el examen</b>${s.clave}</p></div>
-    </article>`).join('');
+  const box = $('#solList'); if(box.dataset.done) return; box.dataset.done = '1';
+  const groups = [...new Set(SOL.map(s=>s.group))];
+  $('#solFilter').innerHTML = ['Todo', ...groups].map((g,i)=>`<button class="sfchip${i?'':' on'}" data-g="${g}">${g==='Todo'?'Todo':g.replace('Semana ','S').replace(' · ',' · ')}</button>`).join('');
+  box.innerHTML = groups.map(g=>{
+    const items = SOL.filter(s=>s.group===g);
+    return `<div class="sol-group" data-group="${g}"><div class="sol-gh">${g} <span>· ${items.length}</span></div>${items.map(solCard).join('')}</div>`;
+  }).join('');
+  $('#solFilter').addEventListener('click', e=>{
+    const b = e.target.closest('.sfchip'); if(!b) return;
+    [...$('#solFilter').children].forEach(c=>c.classList.toggle('on', c===b));
+    const g = b.dataset.g;
+    [...box.children].forEach(grp=>grp.style.display = (g==='Todo' || grp.dataset.group===g) ? '' : 'none');
+    window.scrollTo({top:0, behavior:'smooth'});
+  });
 }
 
 /* ---------- wiring ---------- */
