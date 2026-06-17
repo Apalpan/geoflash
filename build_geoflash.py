@@ -688,6 +688,95 @@ add("Áreas", "Rombo de diagonales 6 y 8. Halla el área.",
     "Rombo (o cuadrilátero de diagonales perpendiculares): área = (D · d)/2.", 18, fig)
 
 # =====================================================================
+# SOLUCIONARIO GRÁFICO (Semana 4 CEPRE PUCP)
+# =====================================================================
+SOL = []
+def addsol(pid, topic, q, ans, res, clave, steps, fig):
+    SOL.append({"pid": pid, "topic": topic, "q": q, "ans": ans, "res": res,
+                "clave": clave, "steps": steps, "fig": wrap(fig)})
+
+# --- P81: diagonales del endecágono ---
+O = (160, 116); R = 92
+pts = [pol(*O, R, 90 + 360/11*k) for k in range(11)]
+dg = "".join(line(*pts[0], *pts[j], "fl2") for j in range(2, 10))
+fig81 = polyline(pts, closed=True) + dg + dot(*pts[0]) + txt(160, 14, "endecágono · n = 11", "fsm")
+addsol("P 81", "Polígonos — diagonales",
+    "Halla el número total de diagonales de un endecágono.", "B) 44", "D = 44",
+    "Diagonales totales = n(n−3)/2. Endecágono = 11 lados. Desde cada vértice salen (n−3) diagonales.",
+    [{"t": "Usa la fórmula del número de diagonales.", "m": "D = n(n−3) / 2"},
+     {"t": "El endecágono tiene 11 lados.", "m": "n = 11"},
+     {"t": "Reemplaza y opera.", "m": "D = 11·(11−3)/2 = 11·8/2"}], fig81)
+
+# --- P87: pentágono, suma de ángulos ---
+O = (160, 122); R = 80
+pts = [pol(*O, R, 90 + 72*k) for k in range(5)]
+labels = [(90, "x+40°"), (162, "x+30°"), (234, "x+40°"), (306, "x+20°"), (18, "x+50°")]
+lt = "".join(txt(pol(*O, R-27, a)[0], pol(*O, R-27, a)[1]+4, s, "fg") for a, s in labels)
+fig87 = polyline(pts, closed=True) + lt
+addsol("P 87", "Polígonos — ángulos internos",
+    "En el pentágono, los ángulos miden x+30°, x+40°, x+50°, x+40° y x+20°. Halla x.",
+    "D) 72°", "x = 72°",
+    "Plantea: (suma de los ángulos dados) = 180°(n−2). Luego despeja x.",
+    [{"t": "Suma de ángulos interiores de un polígono.", "m": "S = 180°(n−2)"},
+     {"t": "Pentágono: n = 5.", "m": "S = 180°·3 = 540°"},
+     {"t": "Suma las 5 expresiones de la figura.", "m": "5x + (30+40+50+40+20) = 5x + 180"},
+     {"t": "Iguala a 540° y despeja.", "m": "5x + 180 = 540 → 5x = 360"}], fig87)
+
+# --- P85: hexágono, diagonal AC ---
+O = (160, 120); R = 82
+verts = [pol(*O, R, a) for a in (150, 90, 30, -30, -90, -150)]
+A_, B_, C_ = verts[0], verts[1], verts[2]
+fig85 = (polyline(verts, closed=True)
+    + polyline([A_, B_, C_], cls="ff", closed=True)
+    + line(*A_, *C_, "fhi")
+    + arc2(*B_, 20, ang_of(*B_, *A_), ang_of(*B_, *C_), "fau")
+    + alabel(*B_, 38, ang_of(*B_, *A_), ang_of(*B_, *C_), "120°", "fu")
+    + txt(mid(A_, B_)[0]-9, mid(A_, B_)[1]-3, "L", "fg")
+    + txt(mid(B_, C_)[0]+9, mid(B_, C_)[1]-3, "L", "fg")
+    + txt(mid(A_, C_)[0], mid(A_, C_)[1]+19, "4√3", "fu")
+    + txt(A_[0]-11, A_[1]+2, "A", "fsm") + txt(B_[0], B_[1]-9, "B", "fsm") + txt(C_[0]+11, C_[1]+2, "C", "fsm"))
+addsol("P 85", "Hexágono regular",
+    "En un hexágono regular ABCDEF, la diagonal AC mide 4√3 m. Halla el perímetro.",
+    "A) 24 m", "P = 24 m",
+    "Hexágono regular: diagonal menor = L·√3; diagonal mayor (AD) = 2L.",
+    [{"t": "AC salta el vértice B: triángulo isósceles ABC con ∠B = 120°.", "m": "AB = BC = L"},
+     {"t": "Esa es la diagonal menor del hexágono.", "m": "AC = L·√3"},
+     {"t": "Iguala al dato y despeja L.", "m": "L√3 = 4√3 → L = 4"},
+     {"t": "El perímetro son 6 lados.", "m": "P = 6·L = 6·4"}], fig85)
+
+# --- P88: 20 diagonales -> ángulo interior ---
+O = (160, 116); R = 84
+pts = [pol(*O, R, 22.5 + 45*k) for k in range(8)]
+v = pts[0]
+fig88 = (polyline(pts, closed=True)
+    + arc2(*v, 20, ang_of(*v, *pts[1]), ang_of(*v, *pts[7]), "fau")
+    + alabel(*v, 38, ang_of(*v, *pts[1]), ang_of(*v, *pts[7]), "135°", "fu")
+    + txt(160, 120, "n = 8", "fsm"))
+addsol("P 88", "Polígonos — dos pasos",
+    "Un polígono regular tiene 20 diagonales. Halla la medida de un ángulo interior.",
+    "D) 135°", "i = 135°",
+    "Primero halla n con las diagonales; luego interior = 180°(n−2)/n.",
+    [{"t": "De las diagonales, despeja el número de lados.", "m": "n(n−3)/2 = 20 → n(n−3) = 40"},
+     {"t": "Por tanteo: 8·5 = 40.", "m": "n = 8  (octágono)"},
+     {"t": "Ángulo interior de un polígono regular.", "m": "i = 180°(n−2)/n = 180·6/8"}], fig88)
+
+# --- P90: cuadrado inscrito en circunferencia ---
+O = (160, 116); R = 80
+sq = [pol(*O, R, a) for a in (45, 135, 225, 315)]
+fig90 = (circ(*O, R) + polyline(sq, closed=True)
+    + line(*sq[0], *sq[2], "fhi") + dot(*O)
+    + txt(mid(sq[0], sq[2])[0]+4, mid(sq[0], sq[2])[1]-7, "8√2", "fu")
+    + txt(160, sq[1][1]-9, "L", "fg"))
+addsol("P 90", "Circunferencia + cuadrado",
+    "El diámetro de una circunferencia mide 8√2 m. Halla el área del cuadrado inscrito.",
+    "B) 64 m²", "A = 64 m²",
+    "Cuadrado inscrito: su diagonal = diámetro. Y la diagonal de un cuadrado = L·√2.",
+    [{"t": "La diagonal del cuadrado inscrito coincide con el diámetro.", "m": "d = 8√2"},
+     {"t": "Diagonal de un cuadrado en función del lado.", "m": "d = L·√2"},
+     {"t": "Iguala y despeja L.", "m": "L√2 = 8√2 → L = 8"},
+     {"t": "Área del cuadrado.", "m": "A = L² = 8²"}], fig90)
+
+# =====================================================================
 HEAD = r'''<!doctype html>
 <html lang="es">
 <head>
@@ -823,6 +912,7 @@ h1,h2,h3{font-family:"Space Grotesk",Inter,sans-serif;font-weight:700;letter-spa
 .fau{fill:none;stroke:var(--accent);stroke-width:2.6;stroke-linecap:round}
 .fhi{fill:none;stroke:var(--accent);stroke-width:3.4;stroke-linecap:round;opacity:.9}
 .fp{fill:var(--fig)}
+.ff{fill:var(--accent-soft);stroke:none}
 .flbl{fill:var(--fig-lbl);font:600 16px "Space Grotesk",sans-serif}
 .fg{fill:var(--fig-lbl);font:600 17px "Space Grotesk",sans-serif}
 .fu{fill:var(--accent);font:700 18px "Space Grotesk",sans-serif}
@@ -884,6 +974,32 @@ h1,h2,h3{font-family:"Space Grotesk",Inter,sans-serif;font-weight:700;letter-spa
 .missc .ma{font-size:.8rem;color:var(--accent);font-weight:600;margin-top:3px;font-family:"Space Grotesk"}
 .empty-good{text-align:center;color:var(--ok);padding:6px 0 12px;font-weight:600}
 
+/* ---------- SOLUCIONARIO ---------- */
+.sol-top{display:flex;align-items:center;gap:14px;margin-bottom:6px}
+.sol-top h2{font-size:clamp(1.3rem,4.4vw,1.75rem)}
+.sol-intro{color:var(--muted);font-size:.9rem;margin-bottom:18px;text-wrap:pretty}
+.sol-card{background:var(--panel);border:1px solid var(--line);border-radius:var(--radius);padding:clamp(15px,3vw,20px);margin-bottom:16px;backdrop-filter:blur(14px);-webkit-backdrop-filter:blur(14px);box-shadow:0 14px 40px -32px color-mix(in oklch,var(--fg) 55%,transparent);animation:screenIn .5s var(--ease) both}
+.sol-head{display:flex;align-items:center;gap:10px;margin-bottom:11px;flex-wrap:wrap}
+.sol-pid{font-family:"Space Grotesk";font-weight:700;font-size:.82rem;background:var(--fg);color:var(--bg2);padding:3px 10px;border-radius:7px}
+.sol-topic{font-size:.72rem;text-transform:uppercase;letter-spacing:.1em;color:var(--muted);font-weight:600}
+.sol-ans{margin-left:auto;font-family:"Space Grotesk";font-weight:700;font-size:.85rem;color:var(--ok);background:color-mix(in oklch,var(--ok) 13%,transparent);border:1px solid color-mix(in oklch,var(--ok) 35%,transparent);padding:4px 11px;border-radius:9px}
+.sol-q{font-size:.93rem;line-height:1.4;color:var(--fg);margin-bottom:14px;text-wrap:pretty}
+.sol-fig{margin-bottom:15px}
+.sol-fig .figsvg{max-height:min(38vh,232px)}
+.sol-steps{display:flex;flex-direction:column;gap:12px}
+.step{display:flex;gap:12px;align-items:flex-start}
+.step .sn{flex:none;width:25px;height:25px;border-radius:50%;display:grid;place-items:center;font-family:"Space Grotesk";font-weight:700;font-size:.8rem;background:var(--accent-soft);color:var(--accent);border:1px solid color-mix(in oklch,var(--accent) 35%,transparent)}
+.step .sb{display:flex;flex-direction:column;gap:6px;padding-top:2px;min-width:0}
+.step .st{font-size:.9rem;line-height:1.35}
+.step .sm{align-self:flex-start;max-width:100%;font-family:"Space Grotesk";font-weight:600;font-size:.95rem;color:var(--fg);background:var(--bg);border:1px solid var(--line);border-radius:9px;padding:6px 12px;font-variant-numeric:tabular-nums}
+.sol-res{display:flex;align-items:center;gap:12px;margin-top:15px;background:var(--accent-soft);border:1px solid color-mix(in oklch,var(--accent) 35%,transparent);border-radius:12px;padding:11px 16px}
+.sol-res span{font-size:.72rem;text-transform:uppercase;letter-spacing:.12em;color:var(--accent);font-weight:600;font-family:"Space Grotesk"}
+.sol-res b{margin-left:auto;font-family:"Space Grotesk";font-size:1.28rem;color:var(--accent)}
+.sol-clave{display:flex;gap:11px;margin-top:11px;border-top:1px solid var(--line);padding-top:12px}
+.sol-clave .bulb{flex:none;font-size:1rem}
+.sol-clave p{font-size:.86rem;color:var(--muted);text-wrap:pretty}
+.sol-clave b{display:block;color:var(--fg);font-family:"Space Grotesk";font-size:.7rem;text-transform:uppercase;letter-spacing:.1em;margin-bottom:3px}
+
 /* ---------- MODAL ---------- */
 .modal{position:fixed;inset:0;z-index:30;display:none;background:color-mix(in oklch,#000 60%,transparent);backdrop-filter:blur(4px);padding:18px;overflow:auto}
 .modal.open{display:grid;place-items:start center;animation:screenIn .3s var(--ease)}
@@ -936,7 +1052,10 @@ BODY = r'''<body>
       </div>
       <div class="cta">
         <button class="btn primary big" id="startBtn">▶ Empezar drill</button>
-        <button class="btn ghost" id="cheatBtn">📋 Chuleta</button>
+      </div>
+      <div class="cta" style="margin-top:10px">
+        <button class="btn ghost" id="cheatBtn" style="flex:1;justify-content:center">📋 Chuleta</button>
+        <button class="btn ghost" id="solBtn" style="flex:1;justify-content:center">📐 Solucionario</button>
       </div>
       <div class="hint">
         <span><kbd>1</kbd>–<kbd>4</kbd> responder</span>
@@ -1010,6 +1129,17 @@ BODY = r'''<body>
     <p class="foot">GeoFlash · sigue practicando para subir tu velocidad</p>
   </section>
 
+  <!-- ============ SOLUCIONARIO ============ -->
+  <section id="solucionario" class="screen">
+    <div class="sol-top">
+      <button class="btn ghost" id="solBack" aria-label="Volver">←</button>
+      <h2>Solucionario gráfico</h2>
+    </div>
+    <p class="sol-intro">5 problemas de geometría resueltos paso a paso — como en el examen. Fíjate en el patrón y la fórmula clave, no memorices el número.</p>
+    <div id="solList"></div>
+    <p class="foot">GeoFlash · Practiquemos Semana 4 · CEPRE PUCP</p>
+  </section>
+
   <!-- Pause overlay -->
   <div class="pause" id="pauseOv"><div class="box"><h2>⏸ En pausa</h2><button class="btn primary" id="resumeBtn">Continuar</button></div></div>
 
@@ -1026,6 +1156,7 @@ BODY = r'''<body>
 
 JS = r'''<script>
 const CARDS = __CARDS__;
+const SOL = __SOL__;
 const $ = s => document.querySelector(s);
 const pad = n => (n<10?'0':'') + n;
 const shuffle = a => { a = a.slice(); for(let i=a.length-1;i>0;i--){const j=Math.random()*(i+1)|0;[a[i],a[j]]=[a[j],a[i]];} return a; };
@@ -1264,8 +1395,27 @@ function setPause(on){
   }
 }
 
+/* ---------- solucionario ---------- */
+function renderSol(){
+  const box = $('#solList');
+  if(box.dataset.done) return; box.dataset.done = '1';
+  box.innerHTML = SOL.map(s=>`
+    <article class="sol-card">
+      <div class="sol-head"><span class="sol-pid">${s.pid}</span><span class="sol-topic">${s.topic}</span><span class="sol-ans">✓ ${s.ans}</span></div>
+      <p class="sol-q">${s.q}</p>
+      <div class="figwrap sol-fig"><div role="img" aria-label="${s.q}">${s.fig}</div></div>
+      <div class="sol-steps">
+        ${s.steps.map((st,i)=>`<div class="step"><span class="sn">${i+1}</span><div class="sb"><span class="st">${st.t}</span>${st.m?`<span class="sm">${st.m}</span>`:''}</div></div>`).join('')}
+      </div>
+      <div class="sol-res"><span>Resultado</span><b>${s.res}</b></div>
+      <div class="sol-clave"><span class="bulb">🎯</span><p><b>Clave para el examen</b>${s.clave}</p></div>
+    </article>`).join('');
+}
+
 /* ---------- wiring ---------- */
 $('#startBtn').addEventListener('click', newGame);
+$('#solBtn').addEventListener('click', ()=>{ renderSol(); show('solucionario'); });
+$('#solBack').addEventListener('click', ()=>show('start'));
 $('#againBtn').addEventListener('click', ()=>show('start'));
 $('#nextBtn').addEventListener('click', next);
 $('#pauseBtn').addEventListener('click', ()=>setPause(true));
@@ -1279,6 +1429,7 @@ $('#cheat').addEventListener('click', e=>{ if(e.target.id==='cheat') $('#cheat')
 
 document.addEventListener('keydown', e=>{
   if($('#cheat').classList.contains('open')){ if(e.key==='Escape') $('#cheat').classList.remove('open'); return; }
+  if($('#solucionario').classList.contains('active')){ if(e.key==='Escape') show('start'); return; }
   if($('#game').classList.contains('active')){
     if(e.key==='Escape'){ setPause(!$('#pauseOv').classList.contains('open')); return; }
     if($('#pauseOv').classList.contains('open')) return;
@@ -1312,11 +1463,13 @@ const b = LS.best; $('#bestScore').textContent = b ? b.toLocaleString('es') : '�
 '''
 
 import os
-html = HEAD + BODY + JS.replace('__CARDS__', json.dumps(cards, ensure_ascii=False))
+js = JS.replace('__CARDS__', json.dumps(cards, ensure_ascii=False))
+js = js.replace('__SOL__', json.dumps(SOL, ensure_ascii=False))
+html = HEAD + BODY + js
 os.makedirs('geoflash', exist_ok=True)
 for path in ('GeoFlash.html', os.path.join('geoflash', 'index.html')):
     with open(path, 'w', encoding='utf-8') as fh:
         fh.write(html)
-print('OK ->', len(cards), 'cards,', len(html), 'bytes -> GeoFlash.html + geoflash/index.html')
+print('OK ->', len(cards), 'cards,', len(SOL), 'soluciones,', len(html), 'bytes')
 
 
